@@ -1,0 +1,19 @@
+services:
+  db:
+    image: mysql:9.0.1
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: employees
+      MYSQL_USER: user
+      MYSQL_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - C:\PersonalCode\parametarest\db\config:/var/lib/mysql
+      - C:\PersonalCode\parametarest\db\initdb:/docker-entrypoint-initdb.d
+
+
+    #entrypoint: ["/docker-entrypoint.sh", "--global-response-templating", "--disable-gzip", "--verbose"]
+
+

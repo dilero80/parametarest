@@ -1,0 +1,17 @@
+spring:
+    application:
+        name: libloanapp
+    datasource:
+        url: jdbc:mysql://127.0.0.1:3307/employees?createDatabaseIfNotExist=true&serverTimezone=UTC
+        username: root
+        password: root
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+
+    server:
+        error:
+            include-stacktrace: never
+
