@@ -36,7 +36,7 @@ public class employeeController {
             @RequestParam String position,
             @RequestParam Double salary) {
 
-        // Validaciones
+        // Validations
         if (names.isEmpty() || lastNames.isEmpty() || idType.isEmpty() ||
                 idNumber.isEmpty() || birthDate.isEmpty() ||
                 bondingDate.isEmpty() || position.isEmpty() || salary == null) {
@@ -82,6 +82,32 @@ public class employeeController {
 
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EmployeeResponse> getEmployee(@PathVariable String id){
+        // Validations
+        if (id.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        Employee employee=employeeWebServiceImp.getEmployee(id);
+        EmployeeResponse response = new EmployeeResponse(employee);
+        response.setBondingTime(calculateBondingTime(employee.getBondingDate()));
+        response.setAge(calculateAge(employee.getBirthDate()));
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<EmployeeResponse> deleteEmployee(@PathVariable String id){
+        if (id.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        Employee employee=employeeWebServiceImp.deleteEmployee(id);
+        EmployeeResponse response = new EmployeeResponse(employee);
+        response.setBondingTime(calculateBondingTime(employee.getBondingDate()));
+        response.setAge(calculateAge(employee.getBirthDate()));
+        return ResponseEntity.ok(response);
+
     }
 
     private boolean isAdult(Date birthDate) {
